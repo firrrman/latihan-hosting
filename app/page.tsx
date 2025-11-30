@@ -8,7 +8,7 @@ export default async function Home() {
 
       {/* LIST USER */}
       <div className="space-y-6">
-        {users.map((u) => (
+        {users.map((u: any) => (
           <div key={u.id} className="bg-white shadow-md p-5 rounded-xl border">
             <h3 className="text-xl font-semibold mb-1">
               {u.name}{" "}
@@ -17,7 +17,7 @@ export default async function Home() {
 
             {/* POSTS */}
             <div className="ml-4 mb-4">
-              {u.posts.map((p) => (
+              {u.posts.map((p: any) => (
                 <p key={p.id} className="text-gray-700">
                   • {p.title}
                 </p>
