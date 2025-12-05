@@ -1,10 +1,18 @@
-import Layout from "./component/layout";
+"use client";
 
-export default async function Home() {
+import Layout from "./component/layout";
+import ScrollVelocity from "./component/scroll-velocity";
+
+export default function Home() {
+  const velocity = 30;
   return (
     <Layout>
-      <div className="h-lvh">
-        <img src="/background1.png" alt="" className="w-full h-full" />
+      <div className="bg-[#eeefe9] h-lvh pt-30">
+        <ScrollVelocity
+          texts={["Selamat Berbelanja", "Perabotan Berkualitas"]}
+          velocity={velocity}
+          className="custom-scroll-text"
+        />
       </div>
     </Layout>
   );
