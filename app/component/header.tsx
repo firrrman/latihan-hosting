@@ -2,12 +2,7 @@
 
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-// use your own icon import if react-icons is not available
-import {
-  ArrowLeftIcon,
-  ChevronLeftIcon,
-  ShoppingCartIcon,
-} from "@heroicons/react/16/solid";
+import { ChevronLeftIcon, ShoppingCartIcon } from "@heroicons/react/16/solid";
 
 type CardNavLink = {
   label: string;
