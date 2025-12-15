@@ -68,13 +68,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         logo={"/perabotan.png"}
         logoAlt="Company Logo"
         items={items}
-        baseColor="#fff"
+        baseColor="#f6f4ff"
         menuColor="#000"
         buttonBgColor="#111"
         buttonTextColor="#fff"
         ease="power3.out"
       />
-      <main className="">{children}</main>
+      <main className="bg-[#f6f4ff]">{children}</main>
     </div>
   );
 }
