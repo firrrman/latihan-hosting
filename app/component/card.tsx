@@ -1,25 +1,25 @@
 export default function Card() {
   const produkCard = [
     {
-      src: "/foto/baskommerah.jpeg",
+      src: "/foto/baskom.png",
       title: "Baskom Merah",
       href: "https://gantungan.com",
       price: "Rp 25.000",
     },
     {
-      src: "/foto/kayu.jpeg",
-      title: "Table Kayu",
+      src: "/foto/talenankayu.png",
+      title: "Talenan Kayu",
       href: "https://company2.com",
       price: "Rp 25.000",
     },
     {
-      src: "/foto/nampanabu.jpeg",
+      src: "/foto/nampanabu.png",
       title: "Nampan Abu",
       href: "https://company3.com",
       price: "Rp 25.000",
     },
     {
-      src: "/foto/nampanhijau.jpeg",
+      src: "/foto/nampanhijau.png",
       title: "Nampan Hijau",
       href: "https://company3.com",
       price: "Rp 25.000",
@@ -37,21 +37,93 @@ export default function Card() {
       price: "Rp 25.000",
     },
   ];
+  const produkCard2 = [
+    {
+      src: "/foto/nampanhijau.png",
+      title: "Nampan Hijau",
+      href: "https://company3.com",
+      price: "Rp 25.000",
+    },
+    {
+      src: "/foto/nampanabu.png",
+      title: "Nampan Abu",
+      href: "https://company3.com",
+      price: "Rp 25.000",
+    },
+    {
+      src: "/foto/talenankayu.png",
+      title: "Talenan Kayu",
+      href: "https://company2.com",
+      price: "Rp 25.000",
+    },
+    {
+      src: "/foto/baskom.png",
+      title: "Baskom Merah",
+      href: "https://gantungan.com",
+      price: "Rp 25.000",
+    },
+    {
+      src: "/foto/saringan.jpeg",
+      title: "Saringan",
+      href: "https://company3.com",
+      price: "Rp 25.000",
+    },
+    {
+      src: "/foto/toplesplastik.jpeg",
+      title: "Toples Plastik",
+      href: "https://company3.com",
+      price: "Rp 25.000",
+    },
+  ];
   return (
-    <div className="p-1">
-      <div className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-1">
+    <div className="p-2 flex flex-col gap-2">
+      <div className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-2 no-scrollbar">
         {produkCard.map((item, index) => (
           <div
             key={index}
-            className="snap-start shrink-0 w-full md:w-1/2 lg:w-1/3 rounded-lg p-4 shadow-md bg-white"
+            className="group relative snap-start shrink-0 w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 rounded-xl overflow-hidden bg-gray-200"
           >
+            {/* Image */}
             <img
               src={item.src}
-              alt="Card Image"
-              className="w-full h-48 object-cover rounded-md mb-4"
+              alt={item.title}
+              className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
             />
-            <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
-            <p className="text-gray-600 mb-4">{item.price}</p>
+
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300">
+              <h2 className="text-xl font-semibold mb-1 translate-y-4 group-hover:translate-y-0 transition">
+                {item.title}
+              </h2>
+              <p className="text-lg font-medium translate-y-4 group-hover:translate-y-0 transition delay-75">
+                {item.price}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-2 no-scrollbar">
+        {produkCard2.map((item, index) => (
+          <div
+            key={index}
+            className="group relative snap-start shrink-0 w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 rounded-xl overflow-hidden bg-gray-200"
+          >
+            {/* Image */}
+            <img
+              src={item.src}
+              alt={item.title}
+              className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300">
+              <h2 className="text-xl font-semibold mb-1 translate-y-4 group-hover:translate-y-0 transition">
+                {item.title}
+              </h2>
+              <p className="text-lg font-medium translate-y-4 group-hover:translate-y-0 transition delay-75">
+                {item.price}
+              </p>
+            </div>
           </div>
         ))}
       </div>

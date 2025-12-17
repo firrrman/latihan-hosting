@@ -210,7 +210,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
       {styleElement}
       <h1
         ref={titleRef}
-        className={`text-pressure-title ${className} ${
+        className={`text-pressure-title select-none ${className} ${
           flex ? "flex justify-between" : ""
         } ${stroke ? "stroke" : ""} uppercase text-center`}
         style={{

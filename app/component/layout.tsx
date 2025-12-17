@@ -74,7 +74,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         buttonTextColor="#fff"
         ease="power3.out"
       />
-      <main>{children}</main>
+      <main className="bg-white">{children}</main>
     </div>
   );
 }

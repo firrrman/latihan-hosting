@@ -83,7 +83,7 @@ export default function Home() {
       <ScrollVelocity
         texts={["Selamat Berbelanja", "Perabotan Berkualitas"]}
         velocity={velocity}
-        className="custom-scroll-text text-[#2645ff]"
+        className="custom-scroll-text text-[#2645ff] select-none"
       />
     </Layout>
   );
