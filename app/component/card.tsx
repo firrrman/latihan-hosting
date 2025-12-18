@@ -84,7 +84,8 @@ export default function Card() {
         </div>
         <div className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-2 no-scrollbar">
           {produkCard.map((item, index) => (
-            <div
+            <a
+              href="/detail-product"
               key={index}
               className="group relative cursor-pointer snap-start shrink-0 w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 rounded-xl overflow-hidden bg-gray-200"
             >
@@ -104,7 +105,7 @@ export default function Card() {
                   {item.price}
                 </p>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
@@ -115,7 +116,8 @@ export default function Card() {
         </div>
         <div className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-2 no-scrollbar">
           {produkCard2.map((item, index) => (
-            <div
+            <a
+              href="/detail-product"
               key={index}
               className="group relative cursor-pointer snap-start shrink-0 w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 rounded-xl overflow-hidden bg-gray-200"
             >
@@ -135,7 +137,7 @@ export default function Card() {
                   {item.price}
                 </p>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
