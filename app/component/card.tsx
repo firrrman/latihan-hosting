@@ -76,7 +76,7 @@ export default function Card() {
     },
   ];
   return (
-    <div className="p-2 flex flex-col gap-2 my-5">
+    <div className="p-2 flex flex-col gap-2 my-10">
       <div className="relative w-fit h-fit">
         <div className="text-2xl md:text-3xl ml-5">
           <h1>Best</h1>
