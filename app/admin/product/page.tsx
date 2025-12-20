@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/prisma";
 import { supabase } from "@/lib/supabase";
 import { revalidatePath } from "next/cache";
