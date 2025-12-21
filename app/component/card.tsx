@@ -3,6 +3,9 @@ import Link from "next/link";
 
 export default async function Card() {
   const bestSeller = await prisma.product.findMany({
+    orderBy: {
+      createdAt: "asc",
+    },
     take: 10,
     include: {
       images: true,
@@ -70,8 +73,8 @@ export default async function Card() {
         </div>
         <div className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-2 no-scrollbar">
           {newProducts.map((item, index) => (
-            <a
-              href="/detail-product"
+            <Link
+              href={`/detail-product/${item.slug}`}
               key={index}
               className="group relative cursor-pointer snap-start shrink-0 w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 rounded-xl overflow-hidden bg-gray-200"
             >
@@ -90,7 +93,7 @@ export default async function Card() {
                   Rp. {item.basePrice}
                 </p>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
