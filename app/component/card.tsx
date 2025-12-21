@@ -6,7 +6,11 @@ export default async function Card() {
     include: {
       images: true,
       colors: true,
-      sizes: true,
+      sizes: {
+        include: {
+          size: true, // ⬅ PENTING
+        },
+      },
     },
   });
   const newProducts = await prisma.product.findMany({
@@ -17,7 +21,11 @@ export default async function Card() {
     include: {
       images: true,
       colors: true,
-      sizes: true,
+      sizes: {
+        include: {
+          size: true, // ⬅ PENTING
+        },
+      },
     },
   });
 
@@ -47,7 +55,7 @@ export default async function Card() {
                   {item.name}
                 </h2>
                 <p className="text-lg font-medium translate-y-4 group-hover:translate-y-0 transition delay-75">
-                  {item.price}
+                  {item.sizes[0].price}
                 </p>
               </div>
             </a>
@@ -78,7 +86,7 @@ export default async function Card() {
                   {item.name}
                 </h2>
                 <p className="text-lg font-medium translate-y-4 group-hover:translate-y-0 transition delay-75">
-                  {item.price}
+                  {item.sizes[0].price}
                 </p>
               </div>
             </a>
