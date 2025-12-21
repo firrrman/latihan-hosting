@@ -85,7 +85,7 @@ export default function DetailProdukComponen({ product }: ProductDetailProps) {
                           aria-label={color.color.name}
                           style={{ backgroundColor: color.color.hex }}
                           className={classNames(
-                            `size-8 appearance-none  rounded-full forced-color-adjust-none checked:outline-2 checked:outline-offset-2 focus-visible:outline-3 focus-visible:outline-offset-3`
+                            `size-8 appearance-none cursor-pointer rounded-full forced-color-adjust-none checked:outline-2 checked:outline-offset-2 focus-visible:outline-3 focus-visible:outline-offset-3`
                           )}
                         />
                       </div>
@@ -106,7 +106,7 @@ export default function DetailProdukComponen({ product }: ProductDetailProps) {
                       <label
                         key={size.id}
                         aria-label={size.size.name}
-                        className="group relative flex items-center justify-center rounded-md border border-gray-300 bg-white p-3 has-checked:border-indigo-600 has-checked:bg-indigo-600 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-indigo-600 has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25"
+                        className="group relative flex items-center justify-center rounded-md border border-gray-300 bg-white p-3 has-checked:border-[#2645ff] has-checked:bg-[#2645ff] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[#2645ff] has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25"
                       >
                         <input
                           defaultValue={size.id}
@@ -115,7 +115,7 @@ export default function DetailProdukComponen({ product }: ProductDetailProps) {
                           type="radio"
                           disabled={!size.inStock}
                           onChange={() => setSelectedPrice(size.price)}
-                          className="absolute inset-0 appearance-none focus:outline-none disabled:cursor-not-allowed"
+                          className="absolute inset-0 appearance-none focus:outline-none disabled:cursor-not-allowed cursor-pointer"
                         />
                         <span className="text-sm font-medium text-gray-900 uppercase group-has-checked:text-white">
                           {size.size.name}
@@ -128,9 +128,9 @@ export default function DetailProdukComponen({ product }: ProductDetailProps) {
 
               <button
                 type="submit"
-                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
+                className="mt-10 flex w-full cursor-pointer items-center justify-center rounded-md border border-transparent bg-[#2645ff] px-8 py-3 text-base font-medium text-white hover:bg-[#0026ff] focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
               >
-                Add to bag
+                Tambah ke Keranjang
               </button>
             </form>
           </div>

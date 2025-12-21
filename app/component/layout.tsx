@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       links: [
         {
           label: "Beranda",
-          href: "/about/company",
+          href: "/",
           ariaLabel: "About Company",
         },
         {

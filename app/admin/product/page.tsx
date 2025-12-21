@@ -214,7 +214,7 @@ export default async function AdminProductPage() {
         >
           <input
             name="name"
-            placeholder="Nama Kategori"
+            placeholder="Nama Warna"
             className="border p-2 w-full"
             required
           />
@@ -235,12 +235,12 @@ export default async function AdminProductPage() {
         >
           <input
             name="name"
-            placeholder="Nama Size"
+            placeholder="Nama Ukuran"
             className="border p-2 w-full"
             required
           />
           <button className="bg-black text-white px-4 py-2 w-full">
-            Simpan Kategori
+            Simpan Ukuran
           </button>
         </form>
 
