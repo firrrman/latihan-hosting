@@ -55,7 +55,7 @@ export default async function Card() {
                   {item.name}
                 </h2>
                 <p className="text-lg font-medium translate-y-4 group-hover:translate-y-0 transition delay-75">
-                  {item.sizes[0].price}
+                  Rp. {item.basePrice}
                 </p>
               </div>
             </a>
@@ -86,7 +86,7 @@ export default async function Card() {
                   {item.name}
                 </h2>
                 <p className="text-lg font-medium translate-y-4 group-hover:translate-y-0 transition delay-75">
-                  {item.sizes[0].price}
+                  Rp. {item.basePrice}
                 </p>
               </div>
             </a>

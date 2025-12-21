@@ -80,13 +80,10 @@ export default async function AdminProductPage() {
     const selectedColorIds = formData.getAll("colors") as string[];
     const selectedSizeIds = formData.getAll("sizes") as string[];
     const highlightsRaw = formData.get("highlights") as string;
+    const basePrice = Number(formData.get("basePrice"));
 
     const sizeData = selectedSizeIds.map((sizeId) => {
       const price = Number(formData.get(`price-${sizeId}`));
-
-      if (!price) {
-        throw new Error("Harga untuk semua size wajib diisi");
-      }
 
       if (images.length === 0) {
         throw new Error("Minimal 1 gambar harus diupload");
@@ -162,6 +159,7 @@ export default async function AdminProductPage() {
         sizes: {
           create: sizeData, // ⬅ harga per size
         },
+        basePrice,
       },
     });
 
@@ -257,6 +255,14 @@ export default async function AdminProductPage() {
           <input
             name="slug"
             placeholder="Slug (contoh: baskom-plastik)"
+            className="border p-2 w-full"
+            required
+          />
+
+          <input
+            name="basePrice"
+            type="number"
+            placeholder="Harga Dasar"
             className="border p-2 w-full"
             required
           />
