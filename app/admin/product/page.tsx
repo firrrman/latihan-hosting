@@ -17,7 +17,7 @@ export default async function AdminProductPage() {
     const slug = formData.get("slug") as string;
 
     if (!name || !slug) {
-      throw new Error("Data belum lengkap");
+      throw new Error("Nama dan slug wajib diisi");
     }
 
     await prisma.category.create({
@@ -73,7 +73,6 @@ export default async function AdminProductPage() {
 
     const name = formData.get("name") as string;
     const slug = formData.get("slug") as string;
-    const price = Number(formData.get("price"));
     const description = formData.get("description") as string;
     const details = formData.get("details") as string;
     const categoryId = formData.get("categoryId") as string;
@@ -82,6 +81,28 @@ export default async function AdminProductPage() {
     const selectedSizeIds = formData.getAll("sizes") as string[];
     const highlightsRaw = formData.get("highlights") as string;
 
+    const sizeData = selectedSizeIds.map((sizeId) => {
+      const price = Number(formData.get(`price-${sizeId}`));
+
+      if (!price) {
+        throw new Error("Harga untuk semua size wajib diisi");
+      }
+
+      if (images.length === 0) {
+        throw new Error("Minimal 1 gambar harus diupload");
+      }
+
+      if (selectedSizeIds.length === 0) {
+        throw new Error("Minimal pilih 1 ukuran");
+      }
+
+      return {
+        sizeId,
+        price,
+        inStock: true,
+      };
+    });
+
     const highlights = highlightsRaw
       ? highlightsRaw
           .split("\n") // split berdasarkan baris
@@ -89,7 +110,7 @@ export default async function AdminProductPage() {
           .filter(Boolean) // hilangkan baris kosong
       : [];
 
-    if (!name || !slug || !price || !images) {
+    if (!name || !slug || !images) {
       throw new Error("Data belum lengkap");
     }
 
@@ -99,15 +120,26 @@ export default async function AdminProductPage() {
     const uploadedImages = [];
 
     for (const image of images) {
-      const fileName = `${Date.now()}-${image.name}`;
+      const fileName = `${crypto.randomUUID()}-${image.name}`;
+
       const { error } = await supabase.storage
         .from("products")
-        .upload(fileName, image, { contentType: image.type });
+        .upload(fileName, image, {
+          contentType: image.type,
+          upsert: false, // penting
+        });
 
-      if (error) throw error;
+      if (error) {
+        console.error("UPLOAD ERROR:", error);
+        throw new Error("Gagal upload gambar");
+      }
 
       const { data } = supabase.storage.from("products").getPublicUrl(fileName);
-      uploadedImages.push({ src: data.publicUrl, alt: name });
+
+      uploadedImages.push({
+        src: data.publicUrl,
+        alt: name,
+      });
     }
 
     /* =====================
@@ -117,7 +149,6 @@ export default async function AdminProductPage() {
       data: {
         name,
         slug,
-        price,
         description,
         details,
         highlights,
@@ -129,7 +160,7 @@ export default async function AdminProductPage() {
           create: selectedColorIds.map((colorId) => ({ colorId })),
         },
         sizes: {
-          create: selectedSizeIds.map((sizeId) => ({ sizeId, inStock: true })),
+          create: sizeData, // ⬅ harga per size
         },
       },
     });
@@ -138,7 +169,15 @@ export default async function AdminProductPage() {
   }
 
   const products = await prisma.product.findMany({
-    include: { images: true, category: true, colors: true, sizes: true },
+    include: {
+      images: true,
+      category: true,
+      sizes: {
+        include: {
+          size: true, // ⬅ PENTING
+        },
+      },
+    },
     orderBy: { createdAt: "desc" },
   });
 
@@ -222,13 +261,27 @@ export default async function AdminProductPage() {
             required
           />
 
-          <input
-            name="price"
-            type="number"
-            placeholder="Harga"
-            className="border p-2 w-full"
-            required
-          />
+          {/* Pilih Size + Harga */}
+          <div>
+            <label className="font-medium">Ukuran & Harga:</label>
+
+            <div className="space-y-2">
+              {sizes.map((size) => (
+                <div key={size.id} className="flex items-center gap-2">
+                  <input type="checkbox" name="sizes" value={size.id} />
+
+                  <span className="w-10">{size.name}</span>
+
+                  <input
+                    type="number"
+                    name={`price-${size.id}`}
+                    placeholder="Harga"
+                    className="border p-1 w-32"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
 
           <textarea
             name="description"
@@ -287,19 +340,6 @@ export default async function AdminProductPage() {
             </div>
           </div>
 
-          {/* Pilih Size */}
-          <div>
-            <label className="font-medium">Ukuran:</label>
-            <div className="flex flex-wrap gap-2">
-              {sizes.map((size) => (
-                <label key={size.id} className="flex items-center gap-1">
-                  <input type="checkbox" name="sizes" value={size.id} />
-                  <span>{size.name}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-
           <button className="bg-black text-white px-4 py-2 w-full">
             Simpan Product
           </button>
@@ -316,7 +356,6 @@ export default async function AdminProductPage() {
               className="w-full h-40 object-cover"
             />
             <div className="font-medium">{product.name}</div>
-            <div className="text-sm">Rp {product.price}</div>
           </div>
         ))}
       </div>
