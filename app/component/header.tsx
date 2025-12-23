@@ -174,49 +174,50 @@ const CardNav: React.FC<CardNavProps> = ({
         } block h-15 p-0 rounded-xl shadow-md relative overflow-hidden will-change-[height]`}
         style={{ backgroundColor: baseColor }}
       >
-        <div className="card-nav-top absolute inset-x-0 top-0 h-15 flex items-center justify-between p-2 pl-[1.1rem] z-2">
-          <div
-            className={`hamburger-menu ${
-              isHamburgerOpen ? "open" : ""
-            } group h-full flex flex-col items-center justify-center cursor-pointer gap-1.5 order-2 md:order-0`}
-            onClick={toggleMenu}
-            role="button"
-            aria-label={isExpanded ? "Close menu" : "Open menu"}
-            tabIndex={0}
-            style={{ color: menuColor || "#000" }}
-          >
-            <div
-              className={`hamburger-line w-7.5 h-0.5 bg-current transition-[transform,opacity,margin] duration-300 ease-linear origin-[50%_50%] ${
-                isHamburgerOpen ? "translate-y-1 rotate-45" : ""
-              } group-hover:opacity-75`}
-            />
-            <div
-              className={`hamburger-line w-7.5 h-0.5 bg-current transition-[transform,opacity,margin] duration-300 ease-linear origin-[50%_50%] ${
-                isHamburgerOpen ? "-translate-y-1 -rotate-45" : ""
-              } group-hover:opacity-75`}
-            />
-          </div>
-
+        <div className="card-nav-top absolute inset-x-0 top-0 h-15 flex items-center justify-between p-3 z-2">
           <div className="logo-container flex items-center">
             <img src={logo} alt={logoAlt} className="logo h-7.5 md:h-10" />
           </div>
 
-          <a
-            href="/keranjang"
-            className="card-nav-cta-button hidden relative md:inline-flex border-0 rounded-[calc(0.75rem-0.2rem)] px-3 items-center h-full font-medium cursor-pointer transition-colors duration-300"
-            style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
-          >
-            <ShoppingCartIcon className="h-5 w-auto" />
-            {cart.length > 0 && (
-              <div className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-                {cart.length}
-              </div>
-            )}
-          </a>
+          <div className="flex justify-center gap-5 items-center h-full">
+            <a
+              href="/keranjang"
+              className="card-nav-cta-button flex relative md:inline-flex border-0 rounded-[calc(0.75rem-0.2rem)] px-3 items-center h-full font-medium cursor-pointer transition-colors duration-300"
+              style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
+            >
+              <ShoppingCartIcon className="h-5 w-auto" />
+              {cart.length > 0 && (
+                <div className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                  {cart.length}
+                </div>
+              )}
+            </a>
+            <div
+              className={`hamburger-menu ${
+                isHamburgerOpen ? "open" : ""
+              } group h-full flex flex-col items-center justify-center cursor-pointer gap-1.5`}
+              onClick={toggleMenu}
+              role="button"
+              aria-label={isExpanded ? "Close menu" : "Open menu"}
+              tabIndex={0}
+              style={{ color: menuColor || "#000" }}
+            >
+              <div
+                className={`hamburger-line w-7.5 h-0.5 bg-current transition-[transform,opacity,margin] duration-300 ease-linear origin-[50%_50%] ${
+                  isHamburgerOpen ? "translate-y-1 rotate-45" : ""
+                } group-hover:opacity-75`}
+              />
+              <div
+                className={`hamburger-line w-7.5 h-0.5 bg-current transition-[transform,opacity,margin] duration-300 ease-linear origin-[50%_50%] ${
+                  isHamburgerOpen ? "-translate-y-1 -rotate-45" : ""
+                } group-hover:opacity-75`}
+              />
+            </div>
+          </div>
         </div>
 
         <div
-          className={`card-nav-content absolute left-0 right-0 top-15 bottom-0 p-2 flex flex-col items-stretch gap-2 justify-start z-1 ${
+          className={`card-nav-content absolute left-0 right-0 top-15 bottom-0 p-3 flex flex-col items-stretch gap-3 justify-start z-1 ${
             isExpanded
               ? "visible pointer-events-auto"
               : "invisible pointer-events-none"
