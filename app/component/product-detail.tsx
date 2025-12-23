@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useCart } from "../context/cart-context";
 
 interface ProductDetailProps {
   product: {
@@ -31,7 +32,50 @@ function classNames(...classes: string[]) {
 
 export default function DetailProdukComponen({ product }: ProductDetailProps) {
   const [selectedPrice, setSelectedPrice] = useState<number>(product.basePrice);
+  const [quantity, setQuantity] = useState(1);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedColorName, setSelectedColorName] = useState<string | null>(
+    null
+  );
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedSizeName, setSelectedSizeName] = useState<string | null>(null);
+
+  const { addToCart } = useCart();
+  console.log(addToCart);
   const router = useRouter();
+
+  const increase = () => {
+    setQuantity((prev) => prev + 1);
+  };
+
+  const decrease = () => {
+    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+  };
+
+  const handleAddToCart = () => {
+    if (product.colors.length > 0 && !selectedColor) {
+      alert("Pilih warna");
+      return;
+    }
+
+    if (product.sizes.length > 0 && !selectedSize) {
+      alert("Pilih ukuran");
+      return;
+    }
+
+    addToCart({
+      productId: product.id,
+      name: product.name,
+      price: selectedPrice,
+      image: product.images[0].src,
+      sizeId: selectedSize,
+      sizeName: selectedSizeName,
+      colorId: selectedColor,
+      colorName: selectedColorName,
+      quantity,
+    });
+  };
+
   return (
     <div className="bg-white mt-30 w-full px-5">
       <button
@@ -68,73 +112,106 @@ export default function DetailProdukComponen({ product }: ProductDetailProps) {
               Rp. {selectedPrice.toLocaleString("id-ID")}
             </p>
 
-            <form className="mt-10">
-              {/* Colors */}
-              <div>
-                <h3 className="text-sm font-medium text-gray-900">Warna</h3>
-
-                <fieldset aria-label="Choose a color" className="mt-4">
-                  <div className="flex items-center gap-x-3">
-                    {product?.colors.map((color) => (
-                      <div
-                        key={color.id}
-                        className="flex rounded-full outline -outline-offset-1 outline-black/10"
-                      >
-                        <input
-                          defaultValue={color.id}
-                          defaultChecked={color === product.colors[0]}
-                          name="color"
-                          type="radio"
-                          aria-label={color.color.name}
-                          style={{ backgroundColor: color.color.hex }}
-                          className={classNames(
-                            `size-8 appearance-none cursor-pointer rounded-full forced-color-adjust-none checked:outline-2 checked:outline-offset-2 focus-visible:outline-3 focus-visible:outline-offset-3`
-                          )}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </fieldset>
+            <div className="flex items-center gap-3 mt-10">
+              {/* Minus */}
+              <div
+                className="flex h-8 w-8 cursor-pointer select-none items-center justify-center rounded border border-gray-300 text-lg font-semibold hover:bg-gray-100"
+                onClick={decrease}
+              >
+                -
               </div>
+
+              {/* Quantity */}
+              <div className="min-w-8 text-center font-medium">{quantity}</div>
+
+              {/* Plus */}
+              <div
+                className="flex h-8 w-8 cursor-pointer select-none items-center justify-center rounded border border-gray-300 text-lg font-semibold hover:bg-gray-100"
+                onClick={increase}
+              >
+                +
+              </div>
+            </div>
+
+            <div className="mt-10">
+              {/* Colors */}
+              {product.colors.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-medium text-gray-900">Warna</h3>
+
+                  <fieldset aria-label="Choose a color" className="mt-4">
+                    <div className="flex items-center gap-x-3">
+                      {product?.colors.map((color) => (
+                        <div
+                          key={color.id}
+                          className="flex rounded-full outline -outline-offset-1 outline-black/10"
+                        >
+                          <input
+                            onChange={() => {
+                              setSelectedColor(color.id);
+                              setSelectedColorName(color.color.name);
+                            }}
+                            checked={selectedColor === color.id}
+                            name="color"
+                            type="radio"
+                            aria-label={color.color.name}
+                            style={{ backgroundColor: color.color.hex }}
+                            className={classNames(
+                              `size-8 appearance-none cursor-pointer rounded-full forced-color-adjust-none checked:outline-2 checked:outline-offset-2 focus-visible:outline-3 focus-visible:outline-offset-3`
+                            )}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </fieldset>
+                </div>
+              )}
 
               {/* Sizes */}
-              <div className="mt-10">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-medium text-gray-900">Ukuran</h3>
-                </div>
-                <fieldset aria-label="Choose a size" className="mt-4">
-                  <div className="grid grid-cols-4 gap-3">
-                    {product?.sizes.map((size) => (
-                      <label
-                        key={size.id}
-                        aria-label={size.size.name}
-                        className="group relative flex items-center justify-center rounded-md border border-gray-300 bg-white p-3 has-checked:border-[#2645ff] has-checked:bg-[#2645ff] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[#2645ff] has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25"
-                      >
-                        <input
-                          defaultValue={size.id}
-                          defaultChecked={size === product.sizes[2]}
-                          name="size"
-                          type="radio"
-                          disabled={!size.inStock}
-                          onChange={() => setSelectedPrice(size.price)}
-                          className="absolute inset-0 appearance-none focus:outline-none disabled:cursor-not-allowed cursor-pointer"
-                        />
-                        <span className="text-sm font-medium text-gray-900 uppercase group-has-checked:text-white">
-                          {size.size.name}
-                        </span>
-                      </label>
-                    ))}
+              {product.sizes.length > 0 && (
+                <div className="mt-10">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-medium text-gray-900">
+                      Ukuran
+                    </h3>
                   </div>
-                </fieldset>
-              </div>
+                  <fieldset aria-label="Choose a size" className="mt-4">
+                    <div className="grid grid-cols-4 gap-3">
+                      {product?.sizes.map((size) => (
+                        <label
+                          key={size.id}
+                          aria-label={size.size.name}
+                          className="group relative flex items-center justify-center rounded-md border border-gray-300 bg-white p-3 has-checked:border-[#2645ff] has-checked:bg-[#2645ff] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[#2645ff] has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25"
+                        >
+                          <input
+                            checked={selectedSize === size.id}
+                            name="size"
+                            type="radio"
+                            disabled={!size.inStock}
+                            onChange={() => {
+                              setSelectedSize(size.id);
+                              setSelectedSizeName(size.size.name);
+                              setSelectedPrice(size.price);
+                            }}
+                            className="absolute inset-0 appearance-none focus:outline-none disabled:cursor-not-allowed cursor-pointer"
+                          />
+                          <span className="text-sm font-medium text-gray-900 uppercase group-has-checked:text-white">
+                            {size.size.name}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </fieldset>
+                </div>
+              )}
 
               <button
-                type="submit"
+                onClick={handleAddToCart}
                 className="mt-10 flex w-full cursor-pointer items-center justify-center rounded-md border border-transparent bg-[#2645ff] px-8 py-3 text-base font-medium text-white hover:bg-[#0026ff] focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
               >
                 Tambah ke Keranjang
               </button>
-            </form>
+            </div>
           </div>
 
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pt-6 lg:pr-8 lg:pb-16">

@@ -3,6 +3,7 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ChevronLeftIcon, ShoppingCartIcon } from "@heroicons/react/16/solid";
+import { useCart } from "../context/cart-context";
 
 type CardNavLink = {
   label: string;
@@ -160,6 +161,8 @@ const CardNav: React.FC<CardNavProps> = ({
     if (el) cardsRef.current[i] = el;
   };
 
+  const { cart } = useCart();
+
   return (
     <div
       className={`card-nav-container absolute left-1/2 -translate-x-1/2 w-[90%] max-w-200 z-99 top-[1.2em] md:top-[2em] ${className}`}
@@ -199,11 +202,16 @@ const CardNav: React.FC<CardNavProps> = ({
           </div>
 
           <a
-            href="#"
-            className="card-nav-cta-button hidden md:inline-flex border-0 rounded-[calc(0.75rem-0.2rem)] px-3 items-center h-full font-medium cursor-pointer transition-colors duration-300"
+            href="/keranjang"
+            className="card-nav-cta-button hidden relative md:inline-flex border-0 rounded-[calc(0.75rem-0.2rem)] px-3 items-center h-full font-medium cursor-pointer transition-colors duration-300"
             style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
           >
             <ShoppingCartIcon className="h-5 w-auto" />
+            {cart.length > 0 && (
+              <div className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                {cart.length}
+              </div>
+            )}
           </a>
         </div>
 
