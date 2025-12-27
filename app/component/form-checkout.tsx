@@ -119,7 +119,6 @@ export default function FormCheckout({ villages }: Props) {
           name="note"
           placeholder="Catatan Tambahan"
           className="border p-2 w-full"
-          required
         />
 
         <h1 className="text-2xl font-semibold mt-5">Kontak</h1>
