@@ -87,8 +87,19 @@ model Order {
   id           String      @id @default(uuid())
   customerName String
   phone        String
+  gmail        String
+  province     String
+  city         String
+  subdistrict  String
+  village      String
+  portalCode   Int
   address      String
+  note         String?
+  ongkir       Int
   totalPrice   Int
+  paymentOrderId String    @unique
+  paymentMethod  String?
+  paidAt         DateTime?
   status       OrderStatus @default(PENDING)
   items        OrderItem[]
   createdAt    DateTime    @default(now())

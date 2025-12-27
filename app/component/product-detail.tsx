@@ -15,11 +15,11 @@ interface ProductDetailProps {
     images: { src: string }[];
     colors: {
       id: string;
-      color: { name: string; hex: string };
+      color: { id: string; name: string; hex: string };
     }[];
     sizes: {
       id: string;
-      size: { name: string };
+      size: { id: string; name: string };
       inStock: boolean;
       price: number;
     }[];
@@ -41,7 +41,6 @@ export default function DetailProdukComponen({ product }: ProductDetailProps) {
   const [selectedSizeName, setSelectedSizeName] = useState<string | null>(null);
 
   const { addToCart } = useCart();
-  console.log(addToCart);
   const router = useRouter();
 
   const increase = () => {
@@ -148,10 +147,10 @@ export default function DetailProdukComponen({ product }: ProductDetailProps) {
                         >
                           <input
                             onChange={() => {
-                              setSelectedColor(color.id);
+                              setSelectedColor(color.color.id);
                               setSelectedColorName(color.color.name);
                             }}
-                            checked={selectedColor === color.id}
+                            checked={selectedColor === color.color.id}
                             name="color"
                             type="radio"
                             aria-label={color.color.name}
@@ -184,12 +183,12 @@ export default function DetailProdukComponen({ product }: ProductDetailProps) {
                           className="group relative flex items-center justify-center rounded-md border border-gray-300 bg-white p-3 has-checked:border-[#2645ff] has-checked:bg-[#2645ff] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[#2645ff] has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25"
                         >
                           <input
-                            checked={selectedSize === size.id}
+                            checked={selectedSize === size.size.id}
                             name="size"
                             type="radio"
                             disabled={!size.inStock}
                             onChange={() => {
-                              setSelectedSize(size.id);
+                              setSelectedSize(size.size.id);
                               setSelectedSizeName(size.size.name);
                               setSelectedPrice(size.price);
                             }}

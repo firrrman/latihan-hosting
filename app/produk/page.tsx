@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Card2 } from "../component/card";
 import Layout from "../component/layout";
 import { newProducts } from "../actions/cardProduct";
@@ -19,7 +20,10 @@ export default async function Produk() {
         <a href="/produk/dapur" className="snap-start whitespace-nowrap">
           Dapur
         </a>
-        <a href="/produk/luar-ruangan" className="snap-start whitespace-nowrap pr-5">
+        <a
+          href="/produk/luar-ruangan"
+          className="snap-start whitespace-nowrap pr-5"
+        >
           Luar Ruangan
         </a>
       </div>

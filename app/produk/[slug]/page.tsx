@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Card2 } from "../../component/card";
 import Layout from "../../component/layout";
 import { getCategoryProducts } from "../../actions/cardProduct";
