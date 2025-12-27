@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "20mb", // atau "50mb"
     },
   },
+  productionBrowserSourceMaps: false,
+  webpack: (config, { dev, isServer }) => {
+    if (dev) {
+      config.devtool = false;
+    }
+    return config;
+  },
+  turbopack: {},
 };
 
 export default nextConfig;
