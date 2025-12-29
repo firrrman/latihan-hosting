@@ -14,22 +14,51 @@ import {
   Truck,
   Package,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function LayoutAdmin({
   children,
+  activeMenuProp,
 }: {
   children: React.ReactNode;
+  activeMenuProp?: string;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeMenu, setActiveMenu] = useState("dashboard");
+  const [activeMenu, setActiveMenu] = useState(activeMenuProp);
+  const router = useRouter();
 
   const menuItems = [
-    { id: "dashboard", name: "Dashboard", icon: Home },
-    { id: "products", name: "Produk", icon: Package },
-    { id: "orders", name: "Pesanan", icon: ShoppingCart },
-    { id: "shipping", name: "Pengiriman", icon: Truck },
-    { id: "analytics", name: "Laporan", icon: TrendingUp },
-    { id: "settings", name: "Pengaturan", icon: Settings },
+    {
+      id: "dashboard",
+      name: "Dashboard",
+      icon: Home,
+      router: "/admin/dashboard",
+    },
+    { id: "products", name: "Produk", icon: Package, router: "/admin/produk" },
+    {
+      id: "orders",
+      name: "Pesanan",
+      icon: ShoppingCart,
+      router: "/admin/pesanan",
+    },
+    {
+      id: "shipping",
+      name: "Pengiriman",
+      icon: Truck,
+      router: "/admin/pengiriman",
+    },
+    {
+      id: "analytics",
+      name: "Laporan",
+      icon: TrendingUp,
+      router: "/admin/laporan",
+    },
+    {
+      id: "settings",
+      name: "Pengaturan",
+      icon: Settings,
+      router: "/admin/pengaturan",
+    },
   ];
 
   return (
@@ -59,10 +88,11 @@ export default function LayoutAdmin({
                 onClick={() => {
                   setActiveMenu(item.id);
                   setSidebarOpen(false);
+                  router.push(item.router);
                 }}
                 className={`w-full flex items-center cursor-pointer space-x-3 px-4 py-3 rounded-lg transition-all ${
                   activeMenu === item.id
-                    ? "bg-[#2645ff] text-white shadow-lg"
+                    ? "text-white shadow-lg bg-[#2645ff]"
                     : "text-gray-300 hover:bg-gray-700 hover:text-white"
                 }`}
               >
@@ -97,7 +127,7 @@ export default function LayoutAdmin({
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="bg-white shadow-sm border-b border-gray-200">
+        <header className="bg-white shadow-sm border-b border-gray-200 lg:py-5">
           <div className="flex items-center justify-between p-4">
             <div className="flex items-center space-x-4">
               <button
@@ -106,18 +136,6 @@ export default function LayoutAdmin({
               >
                 <Menu size={24} />
               </button>
-
-              <div className="relative hidden md:block">
-                <Search
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={20}
-                />
-                <input
-                  type="text"
-                  placeholder="Cari produk"
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 w-80"
-                />
-              </div>
             </div>
           </div>
         </header>

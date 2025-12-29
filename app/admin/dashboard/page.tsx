@@ -57,7 +57,7 @@ export default async function Dashboard() {
   ];
 
   return (
-    <LayoutAdmin>
+    <LayoutAdmin activeMenuProp="dashboard">
       {/* Main Content Area */}
       <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-50">
         <div className="mb-6">
@@ -162,7 +162,7 @@ export default async function Dashboard() {
             <div className="p-6">
               <div className="space-y-5">
                 {bestSellers.map((product, index) => (
-                  <div key={index}>
+                  <div key={index} className="border-b border-gray-300">
                     <div className="flex justify-between mb-2">
                       <div>
                         <p className="text-sm font-semibold text-gray-800">

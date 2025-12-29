@@ -37,6 +37,8 @@ export async function newProducts() {
   });
 }
 
+import { OrderStatus } from "@prisma/client";
+
 export async function allProducts(
   page: number = 1,
   limit: number = 10,
@@ -46,7 +48,6 @@ export async function allProducts(
   const validLimit = Math.min(Math.max(1, limit), 100);
   const skip = (validPage - 1) * validLimit;
 
-  // Buat where condition untuk search
   const whereCondition = search
     ? {
         OR: [
@@ -62,26 +63,51 @@ export async function allProducts(
         where: whereCondition,
         skip,
         take: validLimit,
-        orderBy: {
-          createdAt: "desc",
-        },
+        orderBy: { createdAt: "desc" },
         include: {
           images: true,
           colors: true,
+          category: true,
           sizes: {
-            include: {
-              size: true,
+            include: { size: true },
+          },
+          orderItems: {
+            where: {
+              order: {
+                status: {
+                  in: [
+                    OrderStatus.PAID,
+                    OrderStatus.SHIPPED,
+                    OrderStatus.FINISHED,
+                  ],
+                },
+              },
+            },
+            select: {
+              quantity: true,
             },
           },
         },
       }),
-      prisma.product.count({
-        where: whereCondition,
-      }),
+      prisma.product.count({ where: whereCondition }),
     ]);
 
+    const data = products.map((product) => {
+      const sold = product.orderItems.reduce(
+        (sum, item) => sum + item.quantity,
+        0
+      );
+
+      const { orderItems, ...rest } = product;
+
+      return {
+        ...rest,
+        sold,
+      };
+    });
+
     return {
-      data: products,
+      data,
       meta: {
         page: validPage,
         limit: validLimit,

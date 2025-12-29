@@ -3,7 +3,6 @@ export const dynamic = "force-dynamic";
 import { TrashIcon } from "@heroicons/react/16/solid";
 import Layout from "../component/layout";
 import { useCart } from "../context/cart-context";
-import { useRouter } from "next/navigation";
 
 export default function CartPage() {
   const { cart, removeFromCart } = useCart();
@@ -11,7 +10,6 @@ export default function CartPage() {
     (total, item) => total + item.price * item.quantity,
     0
   );
-  const router = useRouter();
 
   return (
     <Layout>

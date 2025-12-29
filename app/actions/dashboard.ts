@@ -1,5 +1,6 @@
 "use server";
 import { prisma } from "@/lib/prisma";
+import { OrderStatus } from "@prisma/client";
 
 export async function product() {
   return await prisma.product.count({});
@@ -12,7 +13,7 @@ export async function getTotalPaidRevenue() {
     },
     where: {
       status: {
-        in: ["PAID", "SHIPPED", "FINISHED"],
+        in: [OrderStatus.PAID, OrderStatus.SHIPPED, OrderStatus.FINISHED],
       },
     },
   });
@@ -29,7 +30,7 @@ export async function countSoldItems() {
     where: {
       order: {
         status: {
-          in: ["PAID", "SHIPPED", "FINISHED"],
+          in: [OrderStatus.PAID, OrderStatus.SHIPPED, OrderStatus.FINISHED],
         },
       },
     },
@@ -60,7 +61,7 @@ export async function bestSeller() {
     where: {
       order: {
         status: {
-          in: ["PAID", "SHIPPED", "FINISHED"],
+          in: [OrderStatus.PAID, OrderStatus.SHIPPED, OrderStatus.FINISHED],
         },
       },
     },
