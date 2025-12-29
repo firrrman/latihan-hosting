@@ -251,13 +251,13 @@ export default function ProdukListAdmin({
                     <td className="p-4">
                       <div className="flex items-center gap-2">
                         <button
-                          className="p-2 hover:bg-blue-50 rounded-lg transition-colors text-blue-600"
+                          className="p-2 hover:bg-blue-50 rounded-lg cursor-pointer transition-colors text-blue-600"
                           title="Edit"
                         >
                           <Edit size={16} />
                         </button>
                         <button
-                          className="p-2 hover:bg-red-50 rounded-lg transition-colors text-red-600"
+                          className="p-2 hover:bg-red-50 rounded-lg cursor-pointer transition-colors text-red-600"
                           title="Hapus"
                           onClick={() => handleDelete(product.id)}
                         >
