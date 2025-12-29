@@ -59,7 +59,7 @@ export default function ProdukListAdmin({
             className="bg-blue-600 hover:bg-blue-700 cursor-pointer text-white px-5 py-2.5 rounded-lg flex items-center gap-2 transition-colors font-medium"
           >
             <Plus size={20} />
-            Tambah Produk Baru
+            Tambah Produk
           </a>
         </div>
 
@@ -214,9 +214,6 @@ export default function ProdukListAdmin({
                         <div>
                           <p className="font-medium text-slate-800">
                             {product.name}
-                          </p>
-                          <p className="text-xs text-slate-500">
-                            Id: {product.id}
                           </p>
                         </div>
                       </div>
