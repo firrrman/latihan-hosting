@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import LayoutAdmin from "@/app/component/layout-admin";
 import {
   DollarSign,
